@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk - ABUBOT NI NICA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, #ffcd82, #ff23a3);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(240, 135, 135, 0.95);
+            backdrop-filter: blur(10px);
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 50px;
+            z-index: 1;
+        }
+
+        .navbar__logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar__logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        #navbar__logo {
+            background: linear-gradient(to top, #f77777 0%, #dd1d47 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .navbar__menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .navbar__item {
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar__links {
+            color: #ca2c61;
+            text-decoration: none;
+            padding: 0 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .navbar__links:hover {
+            color: #25050c;
+        }
+
+        
+
+        /* Search bar */
+        .navbar__search {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 10px 40px 10px 15px;
+            border: 2px solid #e0627b;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #641c2c;
+            font-weight: 500;
+            width: 200px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            width: 250px;
+            border-color: #a74a5c;
+            box-shadow: 0 2px 8px rgba(167, 74, 92, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            background: #e0627b;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .search-btn:hover {
+            background: #a74a5c;
+            transform: scale(1.1);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            color: #641c2c;
+            text-decoration: none;
+            display: block;
+        }
+
+        .search-result-item:hover {
+            background: #fce4ec;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+        }
+        /* Hamburger */
+        .navbar__toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background: #4b0f23;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        /* helpdesk header */
+        .helpdesk-header {
+            position: relative;
+            min-height: 60vh;
+            padding: 100px 50px 60px;
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .helpdesk-header .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .helpdesk-header .header-logo {
+            position: relative;
+            z-index: 1;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .helpdesk-header h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+            background: linear-gradient(to top, #a86d7f 0%, #eb2c6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .helpdesk-header p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #641c2c;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* main content area */
+        .helpdesk-container {
+            max-width: 1300px;
+            margin: 60px auto 80px;
+            padding: 0 50px;
+        }
+
+        /* section title */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #813042;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .section-title span {
+            background: linear-gradient(to top, #e23f70 0%, hsl(335, 97%, 48%) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* faq section */
+        .faq-section {
+            margin-bottom: 80px;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #ffc2c2;
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8ede3 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(135deg, #fbd4e3 0%, #f0dfd0 100%);
+        }
+
+        .faq-question h3 {
+            color: #a1243f;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .faq-question i {
+            color: #8b5364;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 1.5rem 2rem;
+            color: #000000;
+            line-height: 1.8;
+        }
+
+        /* contact form section */
+        .contact-section {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8ede3 100%);
+            padding: 60px 50px;
+            border-radius: 30px;
+            margin-bottom: 80px;
+        }
+
+        .contact-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #641c2c;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ff769f;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fff;
+            color: #641c2c;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #d42c64;
+            box-shadow: 0 2px 8px rgba(212, 44, 100, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to top, #e44da2 0%, #f5c45b 100%);
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            color: #f5e6d8;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 15px rgba(165, 70, 88, 0.4);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(144, 135, 187, 0.6);
+        }
+
+        .success-message {
+            display: none;
+            background: #ff198c;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        /* animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Mobile responsive styles */
+        @media screen and (max-width: 960px) {
+            .navbar__container {
+                padding: 0 20px;
+            }
+
+            .navbar__menu {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin: 0;
+                width: 100%;
+                position: fixed;
+                top: -100vh;
+                left: 0;
+                right: 0;
+                opacity: 0;
+                transition: all 0.5s ease;
+                background: rgba(248, 237, 227, 0.98);
+                backdrop-filter: blur(10px);
+                height: 100vh;
+                z-index: -1;
+                padding-bottom: 15vh;
+            }
+
+            .navbar__menu.active {
+                top: 80px;
+                opacity: 1;
+                z-index: 99;
+            }
+
+            #navbar__logo {
+                font-size: 1.5rem;
+            }
+
+            .navbar__logo-img {
+                height: 40px;
+            }
+
+            .navbar__toggle {
+                display: block;
+            }
+
+            #mobile-menu.is-active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            #mobile-menu.is-active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            #mobile-menu.is-active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .navbar__item {
+                width: 100%;
+                height: auto;
+            }
+
+            .navbar__links {
+                padding: 1.5rem;
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .navbar__search {
+                padding: 0 1.5rem 1.5rem;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .search-input:focus {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .products {
+                padding: 30px 20px 60px;
+            }
+
+            .heading {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .box-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .heading {
+                font-size: 1.75rem;
+            }
+
+            .box-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <div class="navbar__logo-container">
+                <img src="images/logo-removebg-preview.png" alt="Abubot Logo" class="navbar__logo-img">
+                <a href="/" id="navbar__logo">ABUBOT NI NICA</a>
+            </div>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu" id="navbar-menu">
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">Home</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/tech.html" class="navbar__links">Products</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/about.html" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/helpdesk.html" class="navbar__links">Helpdesk</a>
+                </li>
+                <li class="navbar__search">
+                    <div class="search-container">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- helpdesk header -->
+    <div class="helpdesk-header">
+        <img src="images/bg.png" alt="background" class="bg-image">
+        <img src="images/logo-removebg-preview.png" alt="Abubot Logo" class="header-logo">
+        <h1>How Can We Help You?</h1>
+        <p>Find answers to your questions or get in touch with our owner!</p>
+    </div>
+
+    <!--main content-->
+    <div class="helpdesk-container">
+
+        <!--faq -->
+        <div class="faq-section">
+            <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I place an order?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Browse through our products, add items to your cart, and proceed to checkout. You can pay using various payment methods including credit card, PayPal, G-cash, or cash on delivery. Once your order is confirmed, you'll receive an email with your order details and tracking information.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the shipping options?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We offer standard shipping (3-5 business days). Shipping is free or can ange from 10-15 pesos. Track your order anytime using the tracking number provided in your confirmation email.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is your return policy?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We accept returns within 30 days of delivery. Items must be unused and in original packaging. Simply contact the owner to initiate a return, and we'll provide you with a return shipping label. Refunds are processed within 5-7 business days after we receive the returned item.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How can I track my order?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            After your order ships, you'll receive an email with a tracking number. You can use this number on our Track Order page or directly on the courier's website to see real-time updates on your delivery status.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you offer warranties on Abubots?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Unfprtunately, we do not offer warranties on our Abubots at this time. However , we ensure that all our products go through rigorous quality checks before shipping 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contact form -->
+        <div class="contact-section">
+            <h2 class="section-title">Still Need <span>Help?</span></h2>
+            <div class="contact-form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a topic</option>
+                            <option value="order">Order Status</option>
+                            <option value="return">Returns & Exchanges</option>
+                            <option value="product">Product Information</option>
+                            <option value="payment">Payment Issues</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll get back to you within 24 hours.
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    
+    <script>
+
+
+        // faq accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // contact form submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulate form submission
+            successMessage.classList.add('show');
+            contactForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.navbar__links');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('is-active');
+                navbarMenu.classList.remove('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResults = document.getElementById('searchResults');
+
+        const searchDatabase = [
+            { title: 'Home', url: '/', keywords: ['home', 'main', 'welcome', 'start', 'abubot'] },
+            { title: 'Products', url: '/tech.html', keywords: ['products', 'items', 'shop', 'buy', 'abubot', 'tech', 'tulip', 'sunflower', 'pot','keychain', 'bouquet'] },
+            { title: 'About', url: '/about.html', keywords: ['about', 'info', 'information', 'company', 'nica'] },
+            { title: 'Helpdesk', url: '/helpdesk.html', keywords: ['help', 'support', 'helpdesk', 'contact', 'assistance', 'faq'] },
+            { title: 'Sign Up', url: '/signup.html', keywords: ['signup', 'register', 'account', 'join'] }
+        ];
+
+        function performSearch(query) {
+            if (!query.trim()) {
+                searchResults.innerHTML = '';
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            query = query.toLowerCase();
+            const results = searchDatabase.filter(item => {
+                return item.title.toLowerCase().includes(query) || 
+                       item.keywords.some(keyword => keyword.includes(query));
+            });
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                searchResults.classList.add('active');
+                return;
+            }
+
+            const html = results.map(result => 
+                `<a href="${result.url}" class="search-result-item">${result.title}</a>`
+            ).join('');
+
+            searchResults.innerHTML = html;
+            searchResults.classList.add('active');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+
+        searchBtn.addEventListener('click', () => {
+            performSearch(searchInput.value);
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchResults.classList.remove('active');
+            }
+        });
+    </script>
+    </script>
+</body>
+</html>

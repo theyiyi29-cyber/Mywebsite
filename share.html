@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Like Our Products? - ABUBOT NI NICA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8ede3 0%, #fce4ec 100%);
+            min-height: 100vh;
+            padding: 100px 20px 80px;
+        }
+
+        /* Back button */
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff769f;
+            border-radius: 25px;
+            color: #ff769f;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: #ff769f;
+            color: #fff;
+            transform: translateX(-5px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            background: linear-gradient(to top, #fa2c6a 0%, #ff83ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        .heading {
+            font-size: 3.5rem;
+            color: #641c2c;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .heading span {
+            background: linear-gradient(to top, #ff769f 0%, #ff83ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheading {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        /* Action Cards */
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            color: #ff769f;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #641c2c;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff769f 0%, #ff83ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 118, 159, 0.4);
+        }
+
+        /* Social Section */
+        .social-section {
+            background: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .social-title {
+            font-size: 2rem;
+            color: #641c2c;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .social-description {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Animations */
+        .feedback-section {
+            background: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-title {
+            font-size: 2rem;
+            color: #641c2c;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .feedback-description {
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .star {
+            font-size: 3rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #641c2c;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #fce4ec;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            color: #333;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff769f;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 118, 159, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff769f 0%, #ff83ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 118, 159, 0.3);
+        }
+
+        .success-message {
+            display: none;
+            background: #ff359a;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media screen and (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            .heading {
+                font-size: 2.5rem;
+            }
+
+            .hero-icon {
+                font-size: 4rem;
+            }
+
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .social-section,
+            .feedback-section {
+                padding: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .heading {
+                font-size: 2rem;
+            }
+
+            .subheading {
+                font-size: 1rem;
+            }
+
+            .social-section,
+            .feedback-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-home">
+        <i class='bx bx-arrow-back'></i>
+        Back to Home
+    </a>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h1 class="heading">Like Our <span>Products?</span></h1>
+            <p class="subheading">
+                We'd love to hear from you! Share your thoughts, connect with us on social media, or spread the word to your friends and family.
+            </p>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="action-cards">
+            <div class="action-card">
+                <div class="card-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3 class="card-title">Browse More</h3>
+                <p class="card-description">
+                    Discover more beautiful handcrafted items in our collection!
+                </p>
+                <a href="tech.html" class="card-button">
+                    <i class="fas fa-arrow-right"></i>
+                    View Products
+                </a>
+            </div>
+        </div>
+
+        <!-- Social Section -->
+        <div class="social-section">
+            <h2 class="social-title">Follow Us on Facebook</h2>
+            <p class="social-description">
+                Stay updated with our latest creations and special offers!
+            </p>
+            <a href="https://www.facebook.com/abubotninica.ph" class="card-button" style="margin: 0 auto;">
+                <i class="fab fa-facebook-f"></i>
+                Follow on Facebook
+            </a>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="feedback-section">
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Thank you for your feedback! We appreciate it!
+            </div>
+
+            <h2 class="feedback-title">Leave Us a Review</h2>
+            <p class="feedback-description">
+                Your feedback helps us improve and serve you better!
+            </p>
+
+            <div class="rating-container">
+                <i class="fas fa-star star" data-rating="1"></i>
+                <i class="fas fa-star star" data-rating="2"></i>
+                <i class="fas fa-star star" data-rating="3"></i>
+                <i class="fas fa-star star" data-rating="4"></i>
+                <i class="fas fa-star star" data-rating="5"></i>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="reviewerName">Your Name (Optional)</label>
+                    <input type="text" id="reviewerName" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="review">Your Review</label>
+                    <textarea id="review" required placeholder="Tell us what you think about our products..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Star Rating System
+        const stars = document.querySelectorAll('.star');
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.getAttribute('data-rating'));
+                updateStars();
+            });
+
+            star.addEventListener('mouseenter', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                highlightStars(rating);
+            });
+        });
+
+        document.querySelector('.rating-container').addEventListener('mouseleave', function() {
+            updateStars();
+        });
+
+        function highlightStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function updateStars() {
+            highlightStars(selectedRating);
+        }
+
+        // Share Website Function
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'ABUBOT NI NICA',
+                    text: 'Check out these beautiful handmade products!',
+                    url: window.location.origin
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback - copy to clipboard
+                const url = window.location.origin;
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Link copied to clipboard! Share it with your friends.');
+                });
+            }
+        }
+
+        // Feedback Form Submission
+        const feedbackForm = document.getElementById('feedbackForm');
+        const successMessage = document.getElementById('successMessage');
+
+        feedbackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (selectedRating === 0) {
+                alert('Please select a star rating!');
+                return;
+            }
+
+            const feedbackData = {
+                name: document.getElementById('reviewerName').value || 'Anonymous',
+                rating: selectedRating,
+                review: document.getElementById('review').value
+            };
+
+            console.log('Feedback submitted:', feedbackData);
+
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Reset form
+            feedbackForm.reset();
+            selectedRating = 0;
+            updateStars();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

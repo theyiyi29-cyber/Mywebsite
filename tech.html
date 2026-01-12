@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ABUBOT NI NICA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8ede3 0%, #fce4ec 100%);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(240, 135, 135, 0.95);
+            backdrop-filter: blur(10px);
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 50px;
+            z-index: 1;
+        }
+
+        .navbar__logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar__logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        #navbar__logo {
+            background: linear-gradient(to top, #f77777 0%, #dd1d47 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .navbar__menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .navbar__item {
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar__links {
+            color: #ca2c61;
+            text-decoration: none;
+            padding: 0 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .navbar__links:hover {
+            color: #25050c;
+        }
+
+        /* Search bar */
+        .navbar__search {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 10px 40px 10px 15px;
+            border: 2px solid #e0627b;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #641c2c;
+            font-weight: 500;
+            width: 200px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            width: 250px;
+            border-color: #a74a5c;
+            box-shadow: 0 2px 8px rgba(167, 74, 92, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            background: #e0627b;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .search-btn:hover {
+            background: #a74a5c;
+            transform: scale(1.1);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            color: #641c2c;
+            text-decoration: none;
+            display: block;
+        }
+
+        .search-result-item:hover {
+            background: #fce4ec;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Hamburger */
+        .navbar__toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background: #4b0f23;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 40px 50px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 3rem;
+            color: #641c2c;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .heading span {
+            background: linear-gradient(to top, #ff769f 0%, #ff83ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .box {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .discount {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #ff4757;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            z-index: 10;
+            font-size: 0.9rem;
+        }
+
+        .images {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8ede3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .images img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .box:hover .images img {
+            transform: scale(1.1);
+        }
+
+        .icons {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .box:hover .icons {
+            bottom: 0;
+        }
+
+        .icons a {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #ff769f;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .icons a:hover {
+            background: #d42c64;
+            transform: scale(1.1);
+        }
+
+        .cart-btn {
+            width: auto !important;
+            padding: 0 1.5rem !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 1.5rem;
+        }
+
+        .content h3 {
+            font-size: 1.3rem;
+            color: #641c2c;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            color: #ff769f;
+            font-weight: 700;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        
+       </style>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <div class="navbar__logo-container">
+                <img src="images/logo-removebg-preview.png" alt="Abubot Logo" class="navbar__logo-img">
+                <a href="/" id="navbar__logo">ABUBOT NI NICA</a>
+            </div>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu" id="navbar-menu">
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">Home</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/tech.html" class="navbar__links">Products</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/about.html" class="navbar__links">About</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/helpdesk.html" class="navbar__links">Helpdesk</a>
+                </li>
+                <li class="navbar__search">
+                    <div class="search-container">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <h1 class="heading">latest <span>products</span></h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images.png" alt="Tulip and Sunflower pot">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Tulip and Sunflower pot"
+                           data-price="135">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Tulip and Sunflower pot</h3>
+                    <div class="price">₱ 135 <span>₱ 150</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images 2.png" alt="Sheep Inspired Flower pot">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Sheep Inspired Flower pot"
+                           data-price="144">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Sheep Inspired Flower pot</h3>
+                    <div class="price">₱ 144 <span>₱ 160</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images 3.png" alt="Ribbon Keychain">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Ribbon Keychain (Any color)"
+                           data-price="23">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Ribbon Keychain (Any color)</h3>
+                    <div class="price">₱ 23 <span>₱ 25</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images 4.png" alt="Gerbera and Mini Tulips Keychain">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Gerbera and Mini Tulips Keychain"
+                           data-price="31">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Gerbera and Mini Tulips Keychain</h3>
+                    <div class="price">₱ 31 <span>₱ 35</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images 5.png" alt="Mini Bouquet">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Tulip / Sunflower Mini Bouquet"
+                           data-price="153">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Tulip / Sunflower Mini Bouquet</h3>
+                    <div class="price">₱ 153 <span>₱ 170</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="discount">-10%</span>
+                <div class="images">
+                    <img src="images/images 6.png" alt="Customized Flower Bouquet">
+                    <div class="icons">
+                        <a href="share.html" class="fas fa-heart"></a>
+                        <a href="Buy.html" class="cart-btn add-to-cart-btn"
+                           data-name="Customized (Trio/Mini Daisies) Flower Bouquet"
+                           data-price="315">Order</a>
+                        <a href="share.html" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Customized (Trio/Mini Daisies) Flower Bouquet</h3>
+                    <div class="price">₱ 315 <span>₱ 350</span></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+   <script>
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.navbar__links');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('is-active');
+                navbarMenu.classList.remove('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResults = document.getElementById('searchResults');
+
+        const searchDatabase = [
+            { title: 'Home', url: '/', keywords: ['home', 'main', 'welcome', 'start', 'abubot'] },
+            { title: 'Products', url: '/tech.html', keywords: ['products', 'items', 'shop', 'buy', 'abubot', 'tech', 'tulip', 'sunflower', 'pot','keychain', 'bouquet'] },
+            { title: 'About', url: '/about.html', keywords: ['about', 'info', 'information', 'company', 'nica'] },
+            { title: 'Helpdesk', url: '/helpdesk.html', keywords: ['help', 'support', 'helpdesk', 'contact', 'assistance', 'faq'] },
+            { title: 'Sign Up', url: '/signup.html', keywords: ['signup', 'register', 'account', 'join'] }
+        ];
+
+        function performSearch(query) {
+            if (!query.trim()) {
+                searchResults.innerHTML = '';
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            query = query.toLowerCase();
+            const results = searchDatabase.filter(item => {
+                return item.title.toLowerCase().includes(query) || 
+                       item.keywords.some(keyword => keyword.includes(query));
+            });
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                searchResults.classList.add('active');
+                return;
+            }
+
+            const html = results.map(result => 
+                `<a href="${result.url}" class="search-result-item">${result.title}</a>`
+            ).join('');
+
+            searchResults.innerHTML = html;
+            searchResults.classList.add('active');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+
+        searchBtn.addEventListener('click', () => {
+            performSearch(searchInput.value);
+        });
+
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchResults.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - ABUBOT NI NICA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #e0a3f0 0%, #d3547f 100%);
+            min-height: 100vh;
+            padding: 100px 20px 80px;
+        }
+
+        /* Back button */
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff769f;
+            border-radius: 25px;
+            color: #ff769f;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: #ff769f;
+            color: #fff;
+            transform: translateX(-5px);
+        }
+
+        /* Main Container */
+        .checkout-container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 3rem;
+            color: #641c2c;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .heading span {
+            background: linear-gradient(to top, #9c0f5d 0%, #c771d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form Card */
+        .checkout-card {
+            background: #eedbeb;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(69, 5, 82, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #68192a;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #ff769f;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #641c2c;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: #f86874;
+            margin-left: 3px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #fa9dbc;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff7f7;
+            color: #8d3e75;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff769f;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 118, 159, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Product Selection */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .product-option {
+            position: relative;
+        }
+
+        .product-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .product-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #fce4ec;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .product-option input[type="checkbox"]:checked + .product-label {
+            border-color: #ff769f;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(255, 118, 159, 0.2);
+        }
+
+        .product-label:hover {
+            border-color: #ff769f;
+            transform: translateY(-3px);
+        }
+
+        .product-name {
+            font-size: 0.9rem;
+            color: #641c2c;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #ff769f;
+            font-weight: 700;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff769f 0%, #ff83ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 118, 159, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8ede3 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: #641c2c;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff769f;
+            border-top: 2px solid #ff769f;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #ff2492;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        /* Mobile Responsive */
+        @media screen and (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            .checkout-card {
+                padding: 2rem;
+            }
+
+            .heading {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .checkout-card {
+                padding: 1.5rem;
+            }
+
+            .heading {
+                font-size: 1.75rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="tech.html" class="back-home">
+        <i class='bx bx-arrow-back'></i>
+        Back to Products
+    </a>
+
+    <!-- Checkout Container -->
+    <div class="checkout-container">
+        <h1 class="heading">Complete Your <span>Order</span></h1>
+
+        <div class="checkout-card">
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Order submitted successfully! We'll contact you soon.
+            </div>
+
+            <form id="checkoutForm">
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Contact Information
+                    </h2>
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+63 XXX XXX XXXX">
+                    </div>
+                </div>
+
+                <!-- Product Selection -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-shopping-bag"></i>
+                        Select Products
+                    </h2>
+                    <div class="product-grid">
+                        <div class="product-option">
+                            <input type="checkbox" id="product1" name="products" value="Tulip and Sunflower pot - ₱135">
+                            <label for="product1" class="product-label">
+                                <span class="product-name">Tulip & Sunflower Pot</span>
+                                <span class="product-price">₱135</span>
+                            </label>
+                        </div>
+                        <div class="product-option">
+                            <input type="checkbox" id="product2" name="products" value="Sheep Inspired Flower pot - ₱144">
+                            <label for="product2" class="product-label">
+                                <span class="product-name">Sheep Flower Pot</span>
+                                <span class="product-price">₱144</span>
+                            </label>
+                        </div>
+                        <div class="product-option">
+                            <input type="checkbox" id="product3" name="products" value="Ribbon Keychain - ₱23">
+                            <label for="product3" class="product-label">
+                                <span class="product-name">Ribbon Keychain</span>
+                                <span class="product-price">₱23</span>
+                            </label>
+                        </div>
+                        <div class="product-option">
+                            <input type="checkbox" id="product4" name="products" value="Gerbera and Mini Tulips Keychain - ₱31">
+                            <label for="product4" class="product-label">
+                                <span class="product-name">Gerbera Keychain</span>
+                                <span class="product-price">₱31</span>
+                            </label>
+                        </div>
+                        <div class="product-option">
+                            <input type="checkbox" id="product5" name="products" value="Tulip/Sunflower Mini Bouquet - ₱153">
+                            <label for="product5" class="product-label">
+                                <span class="product-name">Mini Bouquet</span>
+                                <span class="product-price">₱153</span>
+                            </label>
+                        </div>
+                        <div class="product-option">
+                            <input type="checkbox" id="product6" name="products" value="Customized Flower Bouquet - ₱315">
+                            <label for="product6" class="product-label">
+                                <span class="product-name">Custom Bouquet</span>
+                                <span class="product-price">₱315</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-sticky-note"></i>
+                        Additional Notes
+                    </h2>
+                    <div class="form-group">
+                        <label for="notes">Special Instructions or Customization Requests</label>
+                        <textarea id="notes" name="notes" placeholder="Any special color preferences, customization requests, or delivery instructions..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Selected Items:</span>
+                        <span id="itemCount">0</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total:</span>
+                        <span id="totalPrice">₱0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('checkoutForm');
+        const checkboxes = document.querySelectorAll('input[name="products"]');
+        const itemCount = document.getElementById('itemCount');
+        const totalPrice = document.getElementById('totalPrice');
+        const successMessage = document.getElementById('successMessage');
+
+        // Product prices
+        const prices = {
+            'product1': 135,
+            'product2': 144,
+            'product3': 23,
+            'product4': 31,
+            'product5': 153,
+            'product6': 315
+        };
+
+        // Update order summary
+        function updateSummary() {
+            let count = 0;
+            let total = 0;
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    count++;
+                    total += prices[checkbox.id];
+                }
+            });
+
+            itemCount.textContent = count;
+            totalPrice.textContent = '₱' + total;
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSummary);
+        });
+
+        
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const selectedProducts = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            if (selectedProducts.length === 0) {
+                alert('Please select at least one product!');
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                products: selectedProducts,
+                notes: document.getElementById('notes').value,
+                total: totalPrice.textContent
+            };
+
+            console.log('Order Details:', formData);
+
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Reset form
+            form.reset();
+            updateSummary();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
